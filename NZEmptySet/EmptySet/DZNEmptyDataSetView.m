@@ -46,6 +46,25 @@
     }
 }
 
+#pragma mark - Public
+
+- (void)configureImage:(NSString *)imageName detail:(NSString *)detail button:(NSString *)btnTitle{
+    self.detailLabel.text = detail;
+    self.imageView.image = [UIImage imageNamed:imageName];
+    
+    if (btnTitle) {
+        NSString *title = btnTitle;
+        NSMutableDictionary *attributes = [NSMutableDictionary new];
+        UIFont *font = [UIFont systemFontOfSize:26];
+        UIColor *color = [UIColor redColor];
+        [attributes setObject:font forKey:NSFontAttributeName];
+        [attributes setObject:color forKey:NSForegroundColorAttributeName];
+        NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:attributes];
+        [self.button setAttributedTitle:attString forState:UIControlStateNormal];
+    }
+    [self setupConstraints];
+    
+}
 
 #pragma mark - Getters
 
@@ -322,6 +341,10 @@
                                                                                      options:0 metrics:metrics views:views]];
         }
     }
+    
+    [UIView performWithoutAnimation:^{
+        [self layoutIfNeeded];
+    }];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event

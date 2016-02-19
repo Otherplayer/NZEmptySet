@@ -523,9 +523,9 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
         
         [view setupConstraints];
         
-        [UIView performWithoutAnimation:^{
-            [view layoutIfNeeded];            
-        }];
+        //        [UIView performWithoutAnimation:^{
+        //            [view layoutIfNeeded];            
+        //        }];
         
         // Configure scroll permission
         self.scrollEnabled = [self dzn_isScrollAllowed];

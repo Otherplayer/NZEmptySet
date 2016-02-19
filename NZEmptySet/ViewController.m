@@ -12,6 +12,7 @@
 #import "ViewController.h"
 #import "HYQRefreshHeader.h"
 #import "UIScrollView+EmptyDataSet.h"
+#import "DetailController.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) UITableView *tableView;
@@ -37,7 +38,6 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self addRefreshHeader];
-    
     
     // 马上进入刷新状态
     //    [self.tableView.mj_header beginRefreshing];
@@ -68,6 +68,10 @@
 - (void)didReceivedData{
     [self.tableView.mj_header endRefreshing];
     [self.datas addObject:@"sss"];
+    [self.datas addObject:@"sss"];
+    [self.datas addObject:@"sss"];
+    [self.datas addObject:@"sss"];
+    [self.datas addObject:@"sss"];
     [self.tableView reloadData];
 }
 
@@ -76,6 +80,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     [cell setSelected:NO];
+    
+    if (0 == indexPath.row) {
+        [self.datas removeAllObjects];
+        [self.tableView reloadData];
+        return;
+    }
+    
+    DetailController *controller = [[DetailController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    
 }
 
 #pragma mark - UITableViewDataSource

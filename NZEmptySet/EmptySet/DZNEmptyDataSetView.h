@@ -25,4 +25,8 @@
 - (void)setupConstraints;
 - (void)prepareForReuse;
 
+
+
+- (void)configureImage:(NSString *)imageName detail:(NSString *)detail button:(NSString *)btnTitle;
+
 @end
