@@ -95,6 +95,7 @@
  @return An attributed string for the dataset button title, combining font, text color, text pararaph style, etc.
  */
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state;
+- (NSString *)buttonNormalTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state;
 
 /**
  Asks the data source for the image to be used for the specified button state.

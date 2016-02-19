@@ -207,7 +207,13 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
 
 - (NSAttributedString *)dzn_buttonTitleForState:(UIControlState)state
 {
-    if (self.emptyDataSetSource && [self.emptyDataSetSource respondsToSelector:@selector(buttonTitleForEmptyDataSet:forState:)]) {
+    if (self.emptyDataSetSource && [self.emptyDataSetSource respondsToSelector:@selector(buttonNormalTitleForEmptyDataSet:forState:)]) {
+        NSString *string = [self.emptyDataSetSource buttonNormalTitleForEmptyDataSet:self forState:state];
+        NSAttributedString *attString = [[NSAttributedString alloc] initWithString:string];
+        // fqah default
+        if (attString) NSAssert([attString isKindOfClass:[NSAttributedString class]], @"You must return a valid NSAttributedString object for -buttonNormalTitleForEmptyDataSet:forState:");
+        return attString;
+    }else if (self.emptyDataSetSource && [self.emptyDataSetSource respondsToSelector:@selector(buttonTitleForEmptyDataSet:forState:)]) {
         NSAttributedString *string = [self.emptyDataSetSource buttonTitleForEmptyDataSet:self forState:state];
         if (string) NSAssert([string isKindOfClass:[NSAttributedString class]], @"You must return a valid NSAttributedString object for -buttonTitleForEmptyDataSet:forState:");
         return string;
@@ -304,7 +310,7 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
     if (self.emptyDataSetDelegate && [self.emptyDataSetDelegate respondsToSelector:@selector(emptyDataSetShouldAllowScroll:)]) {
         return [self.emptyDataSetDelegate emptyDataSetShouldAllowScroll:self];
     }
-    return NO;
+    return YES;
 }
 
 - (BOOL)dzn_isImageViewAnimateAllow
@@ -473,6 +479,17 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
                     // iOS 6 fallback: insert code to convert imaged if needed
                     view.imageView.image = image;
                 }
+            }else{
+                // fqah default
+                UIImage *image = [UIImage imageNamed:@"icon_dropbox"];
+                if ([image respondsToSelector:@selector(imageWithRenderingMode:)]) {
+                    view.imageView.image = [image imageWithRenderingMode:renderingMode];
+                    view.imageView.tintColor = imageTintColor;
+                }
+                else {
+                    // iOS 6 fallback: insert code to convert imaged if needed
+                    view.imageView.image = image;
+                }
             }
             
             // Configure title label
@@ -483,6 +500,15 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
             // Configure detail label
             if (detailLabelString) {
                 view.detailLabel.attributedText = detailLabelString;
+            }else{
+                // fqah default
+                NSMutableDictionary *attributes = [NSMutableDictionary new];
+                NSString *text = @"No FavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavorites";
+                UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:16.0];
+                UIColor *textColor = [UIColor redColor];
+                [attributes setObject:font forKey:NSFontAttributeName];
+                [attributes setObject:textColor forKey:NSForegroundColorAttributeName];
+                view.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
             }
             
             // Configure button
@@ -806,6 +832,7 @@ NSString *dzn_implementationKey(id target, SEL selector)
         [_button addTarget:self action:@selector(didTapButton:) forControlEvents:UIControlEventTouchUpInside];
         
         [_contentView addSubview:_button];
+        _button.backgroundColor = [UIColor groupTableViewBackgroundColor];
     }
     return _button;
 }
