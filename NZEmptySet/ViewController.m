@@ -27,6 +27,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    
+    self.title = NSLocalizedString(@"Refresh", nil);
     self.datas = [[NSMutableArray alloc] init];
     [self.view addSubview:self.tableView];
     
@@ -50,11 +53,20 @@
 
 - (void)loadNewData{
     NSLog(@"%s",__func__);
-    [self performSelectorOnMainThread:@selector(didReceivedData) withObject:self waitUntilDone:3];
+    
+    double delayInSeconds = 1.5;
+    dispatch_time_t delayInNanoSeconds =dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    // 得到全局队列
+    dispatch_queue_t concurrentQueue = dispatch_get_main_queue();
+    // 延期执行
+    dispatch_after(delayInNanoSeconds, concurrentQueue, ^(void){
+        [self didReceivedData];
+    });
+    
+
 }
 - (void)didReceivedData{
     [self.tableView.mj_header endRefreshing];
-    
     [self.datas addObject:@"sss"];
     [self.tableView reloadData];
 }
@@ -111,6 +123,7 @@
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
     NSLog(@"%s",__func__);
+    [self.tableView.mj_header beginRefreshing];
 }
 
 
