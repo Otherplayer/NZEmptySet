@@ -59,7 +59,7 @@
  @return An attributed string for the dataset description text, combining font, text color, text pararaph style, etc.
  */
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView;
-
+- (NSString *)descriptionNormalForEmptyDataSet:(UIScrollView *)scrollView;
 /**
  Asks the data source for the image of the dataset.
  

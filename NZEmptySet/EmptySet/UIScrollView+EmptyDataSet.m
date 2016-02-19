@@ -142,7 +142,14 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
 
 - (NSAttributedString *)dzn_detailLabelString
 {
-    if (self.emptyDataSetSource && [self.emptyDataSetSource respondsToSelector:@selector(descriptionForEmptyDataSet:)]) {
+    if (self.emptyDataSetSource && [self.emptyDataSetSource respondsToSelector:@selector(descriptionNormalForEmptyDataSet:)]) {
+        // fqah default
+        NSString *string = [self.emptyDataSetSource descriptionNormalForEmptyDataSet:self];
+        NSMutableDictionary *attributes = [NSMutableDictionary new];
+        NSAttributedString *attString = [[NSAttributedString alloc] initWithString:string attributes:attributes];
+        if (attString) NSAssert([attString isKindOfClass:[NSAttributedString class]], @"You must return a valid NSAttributedString object -descriptionNormalForEmptyDataSet:");
+        return attString;
+    }else if (self.emptyDataSetSource && [self.emptyDataSetSource respondsToSelector:@selector(descriptionForEmptyDataSet:)]) {
         NSAttributedString *string = [self.emptyDataSetSource descriptionForEmptyDataSet:self];
         if (string) NSAssert([string isKindOfClass:[NSAttributedString class]], @"You must return a valid NSAttributedString object -descriptionForEmptyDataSet:");
         return string;
@@ -483,7 +490,7 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
             }else{
                 // fqah default
                 NSMutableDictionary *attributes = [NSMutableDictionary new];
-                NSString *text = @"盼望着，盼望着，东风来了，\n春天的脚步近了。一切都像刚睡醒的样子，欣欣然张开了眼。山朗润起来了，水涨起来了，太阳的脸红起来了。";
+                NSString *text = @"fqah default";
                 view.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
             }
             

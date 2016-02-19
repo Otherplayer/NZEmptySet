@@ -94,14 +94,15 @@
 
 
 #pragma mark - DZNEmptyDataSetSource Methods
-
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
     return [UIImage imageNamed:@"logo_airbnb"];
 }
 - (NSString *)buttonNormalTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
-    return @"Come on, Baby!";
+    return @"重新加载";
 }
-
+- (NSString *)descriptionNormalForEmptyDataSet:(UIScrollView *)scrollView{
+    return @"“诶，夜魔你知道吗，我今天和丽娜说话了！”“恭喜，你是怎么做到的？”“她今天把我打死了，然后我又站了起来，说了句“我是不朽哒”，她笑的直不起腰，说你好有趣“";
+}
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
 - (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView{
@@ -109,6 +110,7 @@
 }
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button{
+    NSLog(@"%s",__func__);
 }
 
 
