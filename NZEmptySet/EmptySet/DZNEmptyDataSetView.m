@@ -128,11 +128,14 @@
         _button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         _button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _button.accessibilityIdentifier = @"empty set button";
+        _button.layer.borderColor = [UIColor redColor].CGColor;
+        _button.layer.borderWidth = 0.5;
+        _button.layer.masksToBounds = YES;
+        _button.layer.cornerRadius = 6;
         
         [_button addTarget:self action:@selector(didTapButton:) forControlEvents:UIControlEventTouchUpInside];
         
         [_contentView addSubview:_button];
-        _button.backgroundColor = [UIColor groupTableViewBackgroundColor];
     }
     return _button;
 }

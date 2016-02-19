@@ -96,7 +96,7 @@
 #pragma mark - DZNEmptyDataSetSource Methods
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
-    return [UIImage imageNamed:@"logo_pinterest"];
+    return [UIImage imageNamed:@"logo_airbnb"];
 }
 - (NSString *)buttonNormalTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state{
     return @"Come on, Baby!";

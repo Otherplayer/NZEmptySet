@@ -183,9 +183,14 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
 - (NSAttributedString *)dzn_buttonTitleForState:(UIControlState)state
 {
     if (self.emptyDataSetSource && [self.emptyDataSetSource respondsToSelector:@selector(buttonNormalTitleForEmptyDataSet:forState:)]) {
-        NSString *string = [self.emptyDataSetSource buttonNormalTitleForEmptyDataSet:self forState:state];
-        NSAttributedString *attString = [[NSAttributedString alloc] initWithString:string];
         // fqah default
+        NSString *string = [self.emptyDataSetSource buttonNormalTitleForEmptyDataSet:self forState:state];
+        NSMutableDictionary *attributes = [NSMutableDictionary new];
+        UIFont *font = [UIFont systemFontOfSize:26];
+        UIColor *color = [UIColor redColor];
+        [attributes setObject:font forKey:NSFontAttributeName];
+        [attributes setObject:color forKey:NSForegroundColorAttributeName];
+        NSAttributedString *attString = [[NSAttributedString alloc] initWithString:string attributes:attributes];
         if (attString) NSAssert([attString isKindOfClass:[NSAttributedString class]], @"You must return a valid NSAttributedString object for -buttonNormalTitleForEmptyDataSet:forState:");
         return attString;
     }else if (self.emptyDataSetSource && [self.emptyDataSetSource respondsToSelector:@selector(buttonTitleForEmptyDataSet:forState:)]) {
@@ -478,11 +483,7 @@ static char const * const kEmptyDataSetView =       "emptyDataSetView";
             }else{
                 // fqah default
                 NSMutableDictionary *attributes = [NSMutableDictionary new];
-                NSString *text = @"No FavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavoritesFavorites";
-                UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:16.0];
-                UIColor *textColor = [UIColor redColor];
-                [attributes setObject:font forKey:NSFontAttributeName];
-                [attributes setObject:textColor forKey:NSForegroundColorAttributeName];
+                NSString *text = @"盼望着，盼望着，东风来了，\n春天的脚步近了。一切都像刚睡醒的样子，欣欣然张开了眼。山朗润起来了，水涨起来了，太阳的脸红起来了。";
                 view.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
             }
             
