@@ -67,25 +67,25 @@
 }
 - (void)didReceivedData{
     [self.tableView.mj_header endRefreshing];
-    [self.datas addObject:@"sss"];
-    [self.datas addObject:@"sss"];
-    [self.datas addObject:@"sss"];
-    [self.datas addObject:@"sss"];
-    [self.datas addObject:@"sss"];
+    [self.datas addObject:@"1"];
+    [self.datas addObject:@"2"];
+    [self.datas addObject:@"3"];
+    [self.datas addObject:@"4"];
+    [self.datas addObject:@"5"];
     [self.tableView reloadData];
 }
 
+- (IBAction)clearAction:(id)sender {
+    [self.datas removeAllObjects];
+    [self.tableView reloadData];
+}
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     [cell setSelected:NO];
     
-    if (0 == indexPath.row) {
-        [self.datas removeAllObjects];
-        [self.tableView reloadData];
-        return;
-    }
+
     
     DetailController *controller = [[DetailController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
@@ -115,6 +115,7 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor cyanColor];
+    [cell.textLabel setText:self.datas[indexPath.row]];
 }
 
 
